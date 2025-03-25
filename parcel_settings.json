@@ -1,0 +1,13 @@
+{
+    "Parcel_Max_length_in_mm": 1200,
+    "Parcel_Min_length_in_mm": 90,
+    "Parcel_sigle_double_in_mm": 560,
+    "Parcel_max_width": 600,
+    "Parcel_min_width": 50,
+    "Sensor_ERR_time_in_msec": 3000,
+    "MasSet.parlcel_dimesions.Default_Parcel_Max_length_in_mm": 1200,
+    "MasSet.parlcel_dimesions.Default_Parcel_Min_length_in_mm": 90,
+    "MasSet.parlcel_dimesions.Default_Parcel_max_width": 600,
+    "MasSet.parlcel_dimesions.Default_Parcel_min_width": 55,
+    "MasSet.parlcel_dimesions.Default_Sensor_ERR_time_in_msec": 3000
+}
