@@ -65,7 +65,7 @@ class Keypad(QWidget):
     password_IO         = pyqtSignal(bool)
     int_data_signal     = pyqtSignal(int)
 
-    def __init__(self, width:int, heith:int, pass_code:int = None, log_all: bool = False, Translation_Dictionary: dict = MasSet.Translate_Dictonary_Fallback):
+    def __init__(self, width:int, heith:int, pass_code:int = None, window = None, log_all: bool = False, Translation_Dictionary: dict = MasSet.Translate_Dictonary_Fallback):
         super().__init__()
         
         self.code = pass_code
@@ -159,6 +159,10 @@ class Keypad(QWidget):
 
                 if number_input == self.code:
                     self.password_IO.emit(True)
+                    print(type(window))
+                    window()
+                    if log_all == True:
+                        Logger.logger(f"{window} opend with password {number_input}")
                     clear_input()
                     close_window()
 
@@ -260,7 +264,8 @@ class Keypad(QWidget):
             self.pixmap_blind   = QPixmap(self.blind_pixmap)
             icon_eye_scaled     = self.pixmap_eye.scaledToHeight(100)
             icon_blind_scaled   = self.pixmap_blind.scaledToHeight(100)
-
+            self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint) #makes the window stay on top of the main window and removes the frame
+    
             self.image.setPixmap(icon_eye_scaled)
             self.image.setStyleSheet("border : none; ")
             self.image.setAlignment(Qt.AlignCenter)
@@ -309,10 +314,10 @@ class Keypad(QWidget):
 
 class Keypad_Handeler():
 
-    def __init__ (self, pass_code: int = None , log_all: bool = False ):
+    def __init__ (self, pass_code: int = None, log_all: bool = False, window = None ):
         super().__init__()
 
-            
+
         Desktop = QDesktopWidget()
         screen_geometry = Desktop.screenGeometry()
         self.window_size_W = screen_geometry.width()
@@ -320,7 +325,7 @@ class Keypad_Handeler():
         self.pass_code = pass_code
 
         if self.pass_code is not None: 
-            self.window = Keypad(self.window_size_W,self.window_size_H,self.pass_code,log_all)
+            self.window = Keypad(self.window_size_W,self.window_size_H,self.pass_code,window,log_all)
         else:
             self.window = Keypad(self.window_size_W,self.window_size_H,log_all)
 

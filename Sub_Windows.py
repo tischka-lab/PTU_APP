@@ -839,16 +839,16 @@ class Setting_choise_window(QWidget):
             btn_supervisor                 = QPushButton ("")
             btn_admin                      = QPushButton ("")
             
+            
+            btn_supervisor.setStyleSheet("border : none; ")
+            btn_supervisor.setMinimumHeight(btn_heith)
+            btn_supervisor.setLayout(Button_designer("Supervisor",MasSet.supervisor_user_icon))
+            btn_supervisor.clicked.connect(self.open_supervisor)
 
             btn_technic.setStyleSheet("border : none; ")
             btn_technic.setMinimumHeight(btn_heith)
             btn_technic.setLayout(Button_designer("Technic",MasSet.technic_user_icon))
             btn_technic.clicked.connect(self.open_technic)
-
-            btn_supervisor.setStyleSheet("border : none; ")
-            btn_supervisor.setMinimumHeight(btn_heith)
-            btn_supervisor.setLayout(Button_designer("Supervisor",MasSet.supervisor_user_icon))
-            btn_supervisor.clicked.connect(self.open_supervisor)
 
             btn_admin.setStyleSheet("border : none; ")
             btn_admin.setMinimumHeight(btn_heith)
@@ -883,28 +883,29 @@ class Setting_choise_window(QWidget):
         self.organization.addWidget (self.btn_window_header)
         self.organization.addWidget (self.window_main)
         self.setLayout(self.organization)
-
         
-    def open_technic(self):
-
-        if self.log_all == True:
-            Logger.logger(f"opening : open_technic")
-
-        window = prefab.Keypad_Handeler(MasSet.technic_password, self.log_all)
-
     def open_supervisor(self):
 
         if self.log_all == True:
             Logger.logger(f"opening : open_supervisor")
 
-        window = Public_facing(2560,1600)
+        window = Public_facing(self.size_W, self.size_H, self.log_all, self.Translation_Dict, False, False)
+        window.showFullScreen()
 
+    def open_technic(self):
+
+        if self.log_all == True:
+            Logger.logger(f"opening keypad for technic")
+
+        prefab.Keypad_Handeler(MasSet.technic_password, self.log_all,(Public_facing(self.size_W, self.size_H, self.log_all, self.Translation_Dict, True, False)))
+        
     def open_admin(self):
         
         if self.log_all == True:
-            Logger.logger(f"opening : open_admin")
+            Logger.logger(f"opening keypad for admin")
 
-        window = prefab.Keypad_Handeler(MasSet.admin_password, self.log_all)
+        prefab.Keypad_Handeler(MasSet.admin_password, self.log_all)
+        
 
 class Supervisor(QWidget):
     def __init__(self, window_w, window_h, Translation_Dict):
@@ -1099,9 +1100,7 @@ class Technic(QWidget):
             def get_changed_values(cls):
                 return cls.changed_values
 
-
-
-        def save_current_settings():
+        def save_current_parcel_settings():
 
             new_settings = increase_decrease_num_prefab.get_changed_values()
             settings = load_current_settings()
@@ -1121,25 +1120,13 @@ class Technic(QWidget):
         Window closed
         {ERR}
         """,True)
-        
-        
-        def reset_values():
-            pass
 
         self.btn_SaveChanges            = QPushButton (" Save Changes ")
-        self.btn_reset_values           = QPushButton (" Reset ")
-        self.btn_reset_to_base_values   = QPushButton (" Reset to base values ")
 
         self.btn_SaveChanges.setStyleSheet(f"border-radius : 20px; background-color : {MasSet.Green_color}; border: 4px solid black")
         self.btn_SaveChanges.setFont(QFont(MasSet.Fonttype_1,MasSet.letter_size_Big))
-        self.btn_SaveChanges.clicked.connect(save_current_settings)
+        self.btn_SaveChanges.clicked.connect(save_current_parcel_settings)
 
-        self.btn_reset_values.setStyleSheet(f"border-radius : 20px; background-color : {MasSet.Blue_color}; border: 4px solid black")
-        self.btn_reset_values.setFont(QFont(MasSet.Fonttype_1,MasSet.letter_size_Medium))
-        self.btn_reset_values.clicked.connect(reset_values)
-
-        self.btn_reset_to_base_values.setStyleSheet(f"border-radius : 20px; background-color : {MasSet.Orange_color}; border: 4px solid black")
-        self.btn_reset_to_base_values.setFont(QFont(MasSet.Fonttype_1,MasSet.letter_size_Medium))
         # _________________________ Final layout _________________________
 
         self.organization = QGridLayout()
@@ -1149,8 +1136,6 @@ class Technic(QWidget):
         self.organization.addWidget (increase_decrease_num_prefab(get_setting("Parcel_min_width"),"Parcel_min_width","Parcel Min width"),2,1)
         self.organization.addWidget (increase_decrease_num_prefab(get_setting("Sensor_ERR_time_in_msec"),"Sensor_ERR_time_in_msec","Light barrier blocked error time",True,True,"msec"),3,0)
         self.organization.addWidget (self.btn_SaveChanges,10,3)
-        self.organization.addWidget (self.btn_reset_values,11,3)
-        self.organization.addWidget (self.btn_reset_to_base_values,12,3)
         self.setLayout (self.organization)
     
 
@@ -1163,17 +1148,16 @@ class Admin(QWidget):
 
 
 class Public_facing(QWidget):
-    def __init__(self, width: int, height: int, log_all: bool = False, Colormode="Dark", Translation_Dictionary=None):
+    
+    def __init__(self, width: int, height: int, log_all: bool = False, Translation_Dictionary=None, Technic_ov = False, Admin_ov = False):
         super().__init__()
         self.width = width
         self.height = height
         self.log_all = log_all
-        self.Colormode = Colormode
         self.Translation_Dictionary = Translation_Dictionary or MasSet.Translate_Dictonary_Fallback
 
-        self.Technic_ov = True
-        self.Admin_OV = False
-
+        self.Technic_ov = Technic_ov
+        self.Admin_ov = Admin_ov
         self.setWindowTitle("Settings")
         self.setMinimumSize(800, 900)
         self.setWindowIcon(QIcon("path/to/icon.png"))
@@ -1199,7 +1183,7 @@ class Public_facing(QWidget):
         if self.Technic_ov:
             main_layout.addWidget(Technic())
 
-        if self.Admin_OV:
+        if self.Admin_ov:
             main_layout.addWidget(Admin())
 
         scrollArea = QScrollArea()
@@ -1264,9 +1248,8 @@ class Handeler():
 
 
 def main():
-
     app = QApplication(sys.argv)
-    window = Public_facing(2560,1600)
+    window = Public_facing(2560,1600,True,MasSet.Translate_Dictonary_Fallback,True,True)
     window.showFullScreen()
     #window = Handeler("Settings")
     sys.exit(app.exec_())

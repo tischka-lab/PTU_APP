@@ -17,8 +17,8 @@ log_all:                                        bool    =   True     # Dev Tool 
 
 # placeholder paswords witch need to be replaced @ a later datr 
 
-admin_password:                                 int     = 11
-technic_password:                               int     = 22
+admin_password:                                 int     = 11 # only for testing
+technic_password:                               int     = 22 # only for testing
 CONFIG_FILE:                                    str     = "C:/Users/Tim_F/OneDrive/Documents/Work/PTU/APK/PTU_APP/settings.json"
 
 # parcel/package releted
@@ -122,13 +122,13 @@ DarkmodeColor:  	                            str     =   "#434c4d"       #Dead F
 DarkmodeColor_header:                           str     =   "#2b3030"       #Caviar
 DarkmodeColor_footer:                           str     =   "#2b3030"       #Caviar
 LigthmodeColor:                                 str     =   "#9bb9ba"       #Shallow Sea
-Red_color:                                      str     =   "#fa1414"
+Red_color:                                      str     =   "#FF4C4C"
 Dark_red_color:                                 str     =   "#8c0e0e"                            
 Yellow_color:                                   str     =   "#ed9a09"                            
 Blue_color:                                     str     =   "#144dfa"  
-Green_color:                                    str     =   "#36fa14"
+Green_color:                                    str     =   "#4CAF50"
 Dark_green_color:                               str     =   "#0e630e"
-Orange_color:                                   str     =   "#fa7014"
+Orange_color:                                   str     =   "#FFA500"
 Dark_orange_color:                              str     =   "#8c3d0e"
 Ligth_grey_color:                               str     =   "#757373"
 
@@ -147,7 +147,7 @@ menu_buttonsize_M:                              int     =   100
 menu_buttonsize_S:                              int     =   75
 
 
-start_stop_clear_btn_size_X:                    int     = 350
+start_stop_clear_btn_size_X:                    int     = 450
 start_stop_clear_btn_size_Y:                    int     = 120
 
 # slide functions
@@ -185,6 +185,10 @@ keypad_icon:                                    str     =   "GUI/Recources/icons
 warning_triangle_icon:                          str     =   "GUI/Recources/icons/icons8-error-256"
 bell_icon:                                      str     =   "GUI/Recources/images/icons8-error-256"
 bell_icon_WxH:                                  int     =   640
+ON_Icon:                                        str     =   "GUI/Recources/icons/icons8-power.svg"
+OFF_Icon:                                       str     =   "GUI/Recources/icons/icons8-power.svg"
+reset_Icon:                                     str     =   "GUI/Recources/icons/icons8-reset.svg"
+
 
 icon_eye:                                       str     =   "GUI/Recources/icons/icons8-eye-256"
 icon_blind:                                     str     =   "GUI/Recources/icons/icons8-eye-closed-256"
@@ -230,8 +234,8 @@ img_Warning_Triangle_H:                         int     =   845
 img_Warning_Triangle_W:                         int     =   960
 
 img_CL_Topview_Table:                           str     =   "GUI/Recources/images/CL_Topview_Table"
-
 img_CL_Topview_TB:                              str     =   "GUI/Recources/images/CL_Topview_TB"
+img_CL_Topview_Table_outline:                   str     =   "GUI/Recources/images/CL_Topview_Table_outline"
 
 img_does:                                       int     =   "GUI/Recources/icons/icons8-thumb-up-green-256"
 img_donts:                                      int     =   "GUI/Recources/icons/icons8-thumb-up-red-256"
